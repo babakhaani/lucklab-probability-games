@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101827">
+  <title>Lucky Lab — Probability Games</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Lucky Lab home"><span class="brand-mark">✦</span><span>LUCKY<span class="brand-accent">LAB</span></span></a>
+      <div class="top-actions"><span class="status-dot"></span><span class="status-text" id="user-label">Guest mode</span><button class="auth-top-btn" id="auth-open">Sign up / Login</button></div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">PLAY • LEARN • EXPLORE</p>
+          <h1>Test your <span>luck.</span><br>Learn the odds.</h1>
+          <p class="hero-copy">Three quick probability games. No deposits, wagers, or real-money prizes.</p>
+        </div>
+        <div class="hero-symbol" aria-hidden="true">🎲</div>
+      </section>
+
+      <nav class="tabs" aria-label="Game navigation">
+        <button class="tab active" data-view="dice">Dice</button>
+        <button class="tab" data-view="coin">Coin Flip</button>
+        <button class="tab" data-view="number">Number Guess</button>
+        <button class="tab" data-view="mybets">My Bet</button>
+        <button class="tab" data-view="allbets">All Bet</button>
+      </nav>
+
+      <section class="game-panel" id="game-panel">
+        <div class="game-heading"><div><p class="eyebrow">GAME 01</p><h2>Dice Challenge</h2></div><span class="pill">1–6</span></div>
+        <p class="instruction">Choose the number you think will appear, then roll the dice.</p>
+        <div class="dice-face" id="dice-face" aria-label="Dice result">⚄</div>
+        <div class="choice-grid" id="dice-choices" aria-label="Choose a dice number"></div>
+        <button class="primary-btn" id="play-btn">Roll dice <span>→</span></button>
+        <p class="result-message" id="result-message" aria-live="polite">Choose a number to begin.</p>
+        <div class="stat-row"><div class="stat"><strong id="round-count">0</strong><span>Rounds played</span></div><div class="stat"><strong id="correct-count">0</strong><span>Correct guesses</span></div><div class="stat"><strong id="accuracy">0%</strong><span>Accuracy</span></div></div>
+      </section>
+
+      <section class="auth-note" id="auth-note">Create a local demo profile to personalize this practice session. No real account is created.</section>
+      <section class="info-strip"><span class="info-icon">ⓘ</span><p><strong>Learning mode:</strong> Results are random practice outcomes only. There is no balance, staking, deposit, withdrawal, or cash prize.</p></section>
+      <footer>LUCKYLAB <span>•</span> A probability practice project</footer>
+    </main>
+  </div>
+  <div class="modal-backdrop" id="auth-modal" hidden>
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+      <button class="modal-close" id="auth-close" aria-label="Close">×</button>
+      <p class="eyebrow">LOCAL DEMO PROFILE</p><h2 id="auth-title">Welcome</h2>
+      <p class="instruction">This is a front-end preview only. Do not enter a real password or personal details.</p>
+      <div class="auth-switch"><button class="auth-mode active" data-auth="signup">Sign up</button><button class="auth-mode" data-auth="login">Login</button></div>
+      <label class="field-label" for="profile-name">Display name</label><input class="guess-input" id="profile-name" maxlength="20" placeholder="Choose a nickname" autocomplete="off">
+      <p class="result-message" id="auth-message">A nickname is enough for this demo.</p>
+      <button class="primary-btn" id="auth-submit">Create demo profile</button>
+      <p class="auth-footnote">Demo profile is stored only in this browser. It is not secure authentication.</p>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
