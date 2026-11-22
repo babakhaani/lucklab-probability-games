@@ -1,0 +1,838 @@
+.bets-data-table-title {
+	justify-content: space-between;
+}
+.bets-title-tabs {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-width: 0;
+}
+.bets-title-history {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	flex-shrink: 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: #6b7280;
+	text-decoration: none;
+	padding: 4px 8px;
+	border-radius: 6px;
+	transition: color 0.15s, background 0.15s;
+}
+.bets-title-history i {
+	font-size: 13px;
+	opacity: 0.85;
+}
+.bets-title-history:hover {
+	color: #38bdf8;
+	background: rgba(56, 189, 248, 0.08);
+	text-decoration: none;
+}
+.bets-title-history:hover i {
+	opacity: 1;
+	color: #38bdf8;
+}
+@media (max-width: 768px) {
+	.bets-data-table-title {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.bets-title-tabs {
+		width: 100%;
+	}
+}
+.data-table-head, .data-table-row {
+	text-align: center;
+}
+.bets-cols-all .bets-table-scroll {
+	min-width: 600px!important;
+}
+
+/* Bets table skeleton while loading */
+.bets-data-table.is-loading .data-table-row--skeleton {
+	pointer-events: none;
+}
+
+.bets-skeleton-bar {
+	display: block;
+	width: 95%;
+	max-width: 100%;
+	height: 14px;
+	border-radius: 4px;
+	background: linear-gradient(
+		90deg,
+		rgba(0, 0, 0, 0.06) 0%,
+		rgba(0, 0, 0, 0.1) 40%,
+		rgba(0, 0, 0, 0.06) 80%
+	);
+	background-size: 200% 100%;
+	animation: bets-skeleton-shimmer 1.35s ease-in-out infinite;
+	margin: auto;
+}
+
+.data-table-row--skeleton:nth-child(2) .bets-skeleton-bar { animation-delay: 0.08s; }
+.data-table-row--skeleton:nth-child(3) .bets-skeleton-bar { animation-delay: 0.16s; }
+.data-table-row--skeleton:nth-child(4) .bets-skeleton-bar { animation-delay: 0.24s; }
+.data-table-row--skeleton:nth-child(5) .bets-skeleton-bar { animation-delay: 0.32s; }
+.data-table-row--skeleton:nth-child(6) .bets-skeleton-bar { animation-delay: 0.4s; }
+.data-table-row--skeleton:nth-child(7) .bets-skeleton-bar { animation-delay: 0.48s; }
+.data-table-row--skeleton:nth-child(8) .bets-skeleton-bar { animation-delay: 0.56s; }
+
+.data-table-row--skeleton > span:nth-child(1) .bets-skeleton-bar { width: 72%; margin: auto;}
+.data-table-row--skeleton > span:nth-child(2) .bets-skeleton-bar { width: 58%; margin: auto; }
+.data-table-row--skeleton > span:nth-child(3) .bets-skeleton-bar { width: 64%; margin: auto; }
+.data-table-row--skeleton > span:nth-child(4) .bets-skeleton-bar { width: 48%; margin: auto; }
+.data-table-row--skeleton > span:nth-child(5) .bets-skeleton-bar { width: 70%; margin: auto; }
+.data-table-row--skeleton > span:nth-child(6) .bets-skeleton-bar { width: 52%; margin: auto; }
+
+@keyframes bets-skeleton-shimmer {
+	0% { background-position: 200% 0; }
+	100% { background-position: -200% 0; }
+}
+
+.dark_mode .bets-skeleton-bar {
+	background: linear-gradient(
+		90deg,
+		rgba(255, 255, 255, 0.06) 0%,
+		rgba(255, 255, 255, 0.14) 40%,
+		rgba(255, 255, 255, 0.06) 80%
+	);
+	background-size: 200% 100%;
+}
+
+
+
+/* Multiply — level progress card */
+
+.level-progress-card {
+	max-width: 560px;
+	margin: 28px auto 0;
+	border-radius: 14px;
+	box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+	overflow: hidden;
+}
+
+.level-progress-card__inner {
+	padding: 22px 24px 18px;
+	background: #ffffff;
+	border: 1px solid rgba(13, 170, 127, 0.12);
+	border-radius: 14px;
+}
+
+.dark_mode .level-progress-card__inner {
+	background: #213743 !important;
+	border-color: rgba(13, 170, 127, 0.22);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.level-progress-card__header {
+	margin-bottom: 18px;
+	padding-bottom: 16px;
+	border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.level-progress-card__header h3 {
+	font-size: 16px;
+	font-weight: 600;
+	color: #111827;
+	margin: 0;
+	text-align: left;
+}
+
+.dark_mode .level-progress-card__header {
+	border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark_mode .level-progress-card__header h3 {
+	color: #fff;
+}
+
+.level-progress-card .wagered-info {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	max-width: none;
+	margin: 0 0 6px;
+	height: auto;
+	padding: 0 4px;
+}
+
+.level-progress-card .wagered-label,
+.level-progress-card .target-label {
+	float: none;
+	margin: 0;
+	font-size: 13px;
+	color: #64748b;
+	line-height: 1.4;
+}
+
+.level-progress-card .wagered-label b,
+.level-progress-card .target-label b {
+	display: block;
+	margin-top: 4px;
+	font-size: 17px;
+	color: #1e293b;
+}
+
+.dark_mode .level-progress-card .wagered-label,
+.dark_mode .level-progress-card .target-label {
+	color: #94a3b8;
+}
+
+.dark_mode .level-progress-card .wagered-label b,
+.dark_mode .level-progress-card .target-label b {
+	color: #f1f5f9;
+}
+
+.level-progress-card .target-label {
+	text-align: right;
+}
+
+.level-progress-card .progress-container {
+	max-width: none;
+	margin: 34px 4px 42px;
+}
+
+.level-progress-card .progress {
+	background: rgba(158, 158, 158, 0.16) !important;
+	border-radius: 15px;
+	height: 14px;
+	overflow: hidden;
+}
+
+.dark_mode .level-progress-card .progress {
+	background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.level-progress-card .progress-bar {
+	background: linear-gradient(90deg, #8bc34a 0%, #0daa7f 100%);
+	border-radius: 15px;
+	box-shadow: 0 0 12px rgba(139, 195, 74, 0.35);
+}
+
+.level-progress-card .wagered-boost-label {
+	margin-top: 0;
+	padding: 10px 14px;
+	border-radius: 10px;
+	background: rgba(76, 175, 80, 0.08);
+	border: 1px dashed rgba(76, 175, 80, 0.28);
+}
+
+.dark_mode .level-progress-card .wagered-boost-label {
+	background: rgba(76, 175, 80, 0.12);
+	border-color: rgba(76, 175, 80, 0.35);
+}
+
+/* Tabbed card — custom underline tabs */
+.level-progress-card--tabs .level-progress-card__inner {
+	padding: 0 20px 16px;
+}
+
+.pg-tabs {
+	display: flex;
+	margin: 0 -30px 14px;
+	padding: 0 8px;
+	border-bottom: 1px solid rgba(15, 23, 42, 0.07);
+}
+
+.pg-tabs--single .pg-tab {
+	flex: 1;
+	width: 100%;
+	justify-content: flex-start;
+	padding: 12px 14px;
+	cursor: default;
+	pointer-events: none;
+	color: #111827;
+	font-size: 14px;
+	font-weight: 600;
+	border-bottom-color: transparent;
+	background: transparent;
+}
+
+.pg-tabs--single .pg-tab:hover {
+	color: #111827;
+	background: transparent;
+}
+
+.dark_mode .pg-tabs--single .pg-tab {
+	color: #fff;
+}
+
+.dark_mode .pg-tabs--single .pg-tab:hover {
+	color: #fff;
+	background: transparent;
+}
+
+.pg-tab {
+	flex: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 7px;
+	padding: 12px 10px;
+	border: none;
+	background: transparent;
+	font-family: inherit;
+	font-size: 12px;
+	font-weight: 600;
+	color: #64748b;
+	cursor: pointer;
+	border-bottom: 2px solid transparent;
+	margin-bottom: -1px;
+	transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.pg-tab:hover {
+	color: #334155;
+	background: rgba(15, 23, 42, 0.03);
+}
+
+.pg-tab.is-active[data-pg-tab="wager"] {
+	color: #4a7c23;
+	border-bottom-color: #8bc34a;
+	background: rgba(139, 195, 74, 0.1);
+}
+
+.pg-tab.is-active[data-pg-tab="stamina"] {
+	color: #0277bd;
+	border-bottom-color: #03a9f4;
+	background: rgba(3, 169, 244, 0.1);
+}
+
+.pg-tab__label {
+	line-height: 1.2;
+}
+
+.pg-tab__count {
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 1;
+	padding: 3px 7px;
+	border-radius: 999px;
+	background: rgba(3, 169, 244, 0.14);
+	color: #0277bd;
+}
+
+.pg-tab:focus-visible {
+	outline: 2px solid rgba(3, 169, 244, 0.45);
+	outline-offset: -2px;
+}
+
+.dark_mode .pg-tabs {
+	border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark_mode .pg-tab {
+	color: #94a3b8;
+}
+
+.dark_mode .pg-tab:hover {
+	color: #cbd5e1;
+	background: rgba(255, 255, 255, 0.04);
+}
+
+.dark_mode .pg-tab.is-active[data-pg-tab="wager"] {
+	color: #b8e86a;
+}
+
+.dark_mode .pg-tab.is-active[data-pg-tab="stamina"] {
+	color: #6ecfff;
+}
+
+.dark_mode .pg-tab__count {
+	background: rgba(3, 169, 244, 0.22);
+	color: #6ecfff;
+}
+
+.pg-tab-panel[hidden] {
+	display: none !important;
+}
+
+.progress-tab-meta {
+	margin-bottom: 10px;
+	font-size: 12px;
+	color: #64748b;
+	line-height: 1.4;
+}
+
+.progress-tab-meta b {
+	color: #1e293b;
+}
+
+.dark_mode .progress-tab-meta {
+	color: #94a3b8;
+}
+
+.dark_mode .progress-tab-meta b {
+	color: #f1f5f9;
+}
+
+.level-progress-card--tabs .pg-tab-panel .progress-container {
+	margin: 28px 4px 6px;
+}
+
+.level-progress-card--tabs .progress-bar--stamina {
+	background: linear-gradient(90deg, #03a9f4 0%, #0288d1 100%);
+	box-shadow: 0 0 12px rgba(3, 169, 244, 0.35);
+}
+
+.level-progress-card--tabs .wagered-boost-label {
+	margin-top: 35px;
+}
+
+.stamina-help-icon {
+	margin-left: 4px;
+	font-size: 12px;
+	cursor: pointer;
+	color: #03a9f4;
+	vertical-align: middle;
+}
+
+@media (max-width: 767px) {
+	.level-progress-card {
+		margin-top: 22px;
+		border-radius: 12px;
+	}
+
+	.level-progress-card__inner {
+		padding: 18px 16px 14px;
+		border-radius: 12px;
+	}
+
+	.level-progress-card .wagered-label b,
+	.level-progress-card .target-label b {
+		font-size: 15px;
+	}
+
+	.level-progress-card .progress-container {
+		margin: 30px 0 38px;
+	}
+
+	.level-progress-card--tabs .level-progress-card__inner {
+		padding: 0 16px 14px;
+	}
+
+	.pg-tabs {
+		margin: 0 -25px 12px;
+	}
+
+	.pg-tab {
+		flex-direction: column;
+		gap: 4px;
+		padding: 10px 6px;
+		font-size: 11px;
+	}
+
+	.pg-tab__label {
+		text-align: center;
+	}
+
+	.level-progress-card--tabs .pg-tab-panel .progress-container {
+		margin: 22px 0 4px;
+	}
+}
+
+/* Multiply — games grid showcase frame */
+
+.multiply-games-showcase {
+	max-width: 800px;
+	margin: 50px auto 0;
+	border-radius: 10px;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+.multiply-games-showcase__inner {
+	border-radius: 10px;
+	padding: 20px 14px 12px;
+	background: #ffffff;
+}
+
+.dark_mode .multiply-games-showcase__inner {
+	background: #213743!important;
+}
+
+.multiply-games-showcase .all_games {
+	max-width: none;
+	margin: 0;
+}
+
+.multiply-games-showcase .all_games .game_thumb {
+	margin: 12px 0;
+}
+
+.multiply-games-showcase .all_games .game_thumb:hover {
+	margin: 12px 0;
+	transition: none;
+}
+
+.multiply-games-showcase .all_games .game_thumb .game_img {
+	border: none;
+	border-radius: 12px;
+	box-shadow: 0 2px 10px rgba(15, 23, 42, 0.1);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	will-change: transform;
+}
+
+.dark_mode .multiply-games-showcase .all_games .game_thumb .game_img {
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.multiply-games-showcase .all_games .game_thumb:hover .game_img {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 18px rgba(10, 193, 143, 0.22);
+}
+
+@media (max-width: 767px) {
+	.multiply-games-showcase {
+		margin-top: 28px;
+		border-radius: 14px;
+	}
+
+	.multiply-games-showcase__inner {
+		padding: 14px 8px 8px;
+		border-radius: 12px;
+	}
+}
+
+/* Wager progress replay (faucet + multiply) */
+
+#total_wagered,
+#free_spins {
+	display: inline-block;
+}
+
+.level-progress-card #wagering_progress {
+	transition: width 0.12s linear;
+}
+
+.level-progress-card .progress-container .progress-thumb {
+	transition: margin-left 0.12s linear;
+}
+
+#wpr-level-up-confetti {
+	position: fixed;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: 1000000;
+}
+
+
+.wpr-level-up-modal {
+	border-radius: 18px !important;
+	overflow: hidden;
+	box-shadow: 0 28px 60px rgba(15, 23, 42, 0.28) !important;
+}
+
+.wpr-level-up-modal header {
+	display: none !important;
+}
+
+.wpr-level-up-modal .center-content {
+	padding: 0 !important;
+	max-height: none !important;
+	overflow: visible !important;
+}
+
+@keyframes wprLevelPop {
+	from {
+		opacity: 0;
+		transform: scale(0.94) translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1) translateY(0);
+	}
+}
+
+.wpr-level-up-popup {
+	animation: wprLevelPop 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+	text-align: center;
+}
+
+.wpr-level-up-popup__hero {
+	position: relative;
+	padding: 32px 24px 28px;
+	color: #fff;
+	overflow: hidden;
+}
+
+.wpr-level-up-popup__confetti {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.wpr-level-up-popup__confetti span {
+	position: absolute;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	opacity: 0.55;
+	animation: wprDotDrift1 2.8s ease-in-out infinite;
+}
+
+@keyframes wprDotDrift1 {
+	0%, 100% { transform: translate(0, 0); }
+	50% { transform: translate(12px, -14px); }
+}
+
+@keyframes wprDotDrift2 {
+	0%, 100% { transform: translate(0, 0); }
+	50% { transform: translate(-14px, 10px); }
+}
+
+@keyframes wprDotDrift3 {
+	0%, 100% { transform: translate(0, 0); }
+	50% { transform: translate(8px, 16px); }
+}
+
+.wpr-level-up-popup__confetti span:nth-child(2n) {
+	animation-name: wprDotDrift2;
+	animation-duration: 3.3s;
+}
+
+.wpr-level-up-popup__confetti span:nth-child(3n) {
+	animation-name: wprDotDrift3;
+	animation-duration: 2.2s;
+	animation-delay: -0.6s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wpr-level-up-popup__confetti span {
+		animation: none;
+	}
+}
+
+
+.wpr-level-up-popup__confetti span:nth-child(1) { top: 18%; left: 12%; background: #fff; }
+.wpr-level-up-popup__confetti span:nth-child(2) { top: 24%; right: 16%; background: #ffe082; }
+.wpr-level-up-popup__confetti span:nth-child(3) { top: 58%; left: 18%; background: #ffcc80; }
+.wpr-level-up-popup__confetti span:nth-child(4) { top: 62%; right: 22%; background: #fff; }
+.wpr-level-up-popup__confetti span:nth-child(5) { top: 38%; left: 42%; background: #fff59d; width: 5px; height: 5px; }
+.wpr-level-up-popup__confetti span:nth-child(6) { top: 12%; left: 48%; background: #fff; width: 5px; height: 5px; }
+
+.wpr-level-up-popup__icon {
+	width: 72px;
+	height: 72px;
+	margin: 0 auto 14px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 30px;
+	background: rgba(255, 255, 255, 0.18);
+	border: 2px solid rgba(255, 255, 255, 0.35);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.wpr-level-up-popup__eyebrow {
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	opacity: 0.92;
+	margin-bottom: 6px;
+}
+
+.wpr-level-up-popup__level {
+	font-size: 34px;
+	font-weight: 800;
+	line-height: 1.1;
+	letter-spacing: 0.02em;
+}
+
+.wpr-level-up-popup__subtext {
+	margin-top: 8px;
+	font-size: 14px;
+	opacity: 0.88;
+}
+
+.wpr-level-up-popup__body {
+	padding: 22px 24px 26px;
+	background: #fff;
+}
+
+.wpr-level-up-popup__message {
+	margin: 0 0 18px;
+	font-size: 15px;
+	line-height: 1.55;
+	color: #5f6368;
+}
+
+.wpr-level-up-popup__rewards {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-bottom: 20px;
+}
+
+.wpr-level-up-popup__reward {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px 14px;
+	border-radius: 14px;
+	background: #f4f8ef;
+	border: 1px solid #e0ecd3;
+	text-align: left;
+}
+
+.wpr-level-up-popup__reward-main {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	min-width: 0;
+}
+
+.wpr-level-up-popup__reward-icon {
+	width: 40px;
+	height: 40px;
+	border-radius: 10px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	font-size: 16px;
+	flex-shrink: 0;
+}
+
+.wpr-level-up-popup__reward-icon--spins {
+	background: #8bc34a;
+}
+
+.wpr-level-up-popup__reward-icon--faucet {
+	background: #0daa7f;
+}
+
+.wpr-level-up-popup__reward-value {
+	font-size: 16px;
+	font-weight: 600;
+	color: #558b2f;
+	line-height: 1.1;
+}
+
+.wpr-level-up-popup__reward-label {
+	font-size: 13px;
+	font-weight: 600;
+	color: #689f38;
+	line-height: 1.3;
+}
+
+.wpr-level-up-popup__reward-meta {
+	font-size: 12px;
+	color: #7a8b6a;
+	margin-top: 2px;
+}
+
+.wpr-level-up-popup__btn {
+	display: block;
+	width: 100%;
+	padding: 13px 18px;
+	border: none;
+	border-radius: 12px;
+	background: linear-gradient(135deg, #8bc34a 0%, #0daa7f 100%);
+	color: #fff;
+	font-size: 15px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
+	box-shadow: 0 8px 18px rgba(13, 170, 127, 0.22);
+}
+
+.wpr-level-up-popup__btn:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 10px 22px rgba(13, 170, 127, 0.28);
+}
+
+/* Level themes */
+.wpr-level-up-popup--stone .wpr-level-up-popup__hero { background: linear-gradient(145deg, #78909c 0%, #546e7a 100%); }
+.wpr-level-up-popup--iron .wpr-level-up-popup__hero { background: linear-gradient(145deg, #607d8b 0%, #455a64 100%); }
+.wpr-level-up-popup--bronze .wpr-level-up-popup__hero { background: linear-gradient(145deg, #b87333 0%, #8d5524 100%); }
+.wpr-level-up-popup--silver .wpr-level-up-popup__hero { background: linear-gradient(145deg, #90a4ae 0%, #607d8b 100%); }
+.wpr-level-up-popup--gold .wpr-level-up-popup__hero { background: linear-gradient(145deg, #ffb300 0%, #f57c00 100%); }
+.wpr-level-up-popup--platinum .wpr-level-up-popup__hero { background: linear-gradient(145deg, #b0bec5 0%, #78909c 100%); }
+.wpr-level-up-popup--diamond .wpr-level-up-popup__hero { background: linear-gradient(145deg, #4fc3f7 0%, #0288d1 100%); }
+.wpr-level-up-popup--master .wpr-level-up-popup__hero { background: linear-gradient(145deg, #ab47bc 0%, #6a1b9a 100%); }
+
+.dark_mode .wpr-level-up-modal {
+	box-shadow: 0 28px 60px rgba(0, 0, 0, 0.55) !important;
+}
+
+.dark_mode .wpr-level-up-popup__body {
+	background: #1e2430;
+}
+
+.dark_mode .wpr-level-up-popup__message {
+	color: #b0b8c4;
+}
+
+.dark_mode .wpr-level-up-popup__reward {
+	background: rgba(139, 195, 74, 0.1);
+	border-color: rgba(139, 195, 74, 0.22);
+}
+
+.dark_mode .wpr-level-up-popup__reward-value {
+	color: #aed581;
+}
+
+.dark_mode .wpr-level-up-popup__reward-label {
+	color: #8bc34a;
+}
+
+.dark_mode .wpr-level-up-popup__reward-meta {
+	color: #9aaa8c;
+}
+
+
+/* Bet history game column: icons on one vertical line (must win over text-align:center) */
+.bets-cols-my .data-table-head,
+.bets-cols-my .data-table-row {
+	grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.35fr) minmax(0, 1fr) minmax(0, 0.9fr) minmax(0, 1fr);
+}
+.bets-cols-all .data-table-head,
+.bets-cols-all .data-table-row {
+	grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 0.95fr) minmax(0, 0.9fr) minmax(0, 1fr);
+}
+.bets-data-table .data-table-head > span,
+.bets-data-table .data-table-row > span {
+	min-width: 0;
+}
+.bets-cols-my .data-table-head > span:nth-child(2),
+.bets-cols-my .data-table-row > span:nth-child(2),
+.bets-cols-all .data-table-head > span:nth-child(3),
+.bets-cols-all .data-table-row > span:nth-child(3) {
+	display: flex !important;
+	justify-content: flex-start !important;
+	align-items: center !important;
+	text-align: left !important;
+	min-width: 0;
+	padding-left: 8px;
+	box-sizing: border-box;
+}
+.bets-data-table .bet-game-title {
+	display: grid !important;
+	grid-template-columns: 18px minmax(0, 1fr) !important;
+	align-items: center !important;
+	column-gap: 6px !important;
+	width: 100% !important;
+	max-width: 100% !important;
+	min-width: 0 !important;
+	overflow: hidden;
+	text-align: left !important;
+	justify-items: start !important;
+	margin: 0 !important;
+}
+.bets-data-table .bet-game-title > span {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-align: left !important;
+}
+.bets-data-table .bet-game-icon {
+	margin: 0 !important;
+	justify-self: center;
+}

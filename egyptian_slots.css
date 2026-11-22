@@ -1,0 +1,655 @@
+/* Egyptian Slots — light/dark*/
+:root {
+	--s2-stage-bg: #f5f5f5;
+	--s2-frame: #e5e5e5;
+	--s2-board: #ffffff;
+	--s2-reel-line: rgba(0,0,0,.08);
+	--s2-muted: #757575;
+	--s2-text: #333333;
+	--s2-accent: #4caf50;
+	--s2-win-line: rgba(76,175,80,.95);
+	--s2-panel: #ffffff;
+	--s2-modal-bg: #ffffff;
+	--s2-modal-border: #ddd;
+	--s2-bonus-bg: linear-gradient(90deg, #fff8e1, #ffecb3);
+	--s2-bonus-text: #f57c00;
+}
+
+.dark_mode {
+	--s2-stage-bg: #0f212e;
+	--s2-frame: #2f4553;
+	--s2-board: #071824;
+	--s2-reel-line: rgba(47,69,83,.85);
+	--s2-muted: #b1bad3;
+	--s2-text: #ffffff;
+	--s2-accent: #00e701;
+	--s2-win-line: rgba(0,231,1,.95);
+	--s2-panel: #1a2c38;
+	--s2-modal-bg: #1a2c38;
+	--s2-modal-border: #2f4553;
+	--s2-bonus-bg: linear-gradient(90deg, #3d2a00, #5c4300);
+	--s2-bonus-text: #ffcd05;
+}
+
+#game_egyptian_slots.game_main,
+#game_egyptian_slots {
+	max-width: 550px;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.s2-stage {
+	background: var(--s2-stage-bg);
+	border-radius: 8px;
+	padding: 16px 12px 20px;
+	position: relative;
+	margin: 8px 10px 0;
+}
+
+.s2-board-wrap {
+	position: relative;
+	display: grid;
+	grid-template-columns: 28px 1fr 28px;
+	gap: 6px;
+	align-items: stretch;
+}
+
+.s2-side {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 6px 0;
+	font-size: 11px;
+	font-weight: 700;
+	color: var(--s2-muted);
+	user-select: none;
+	position: relative;
+	z-index: 7;
+}
+.s2-side.left { align-items: flex-end; text-align: right; }
+.s2-side.right { align-items: flex-start; text-align: left; }
+.s2-side .s2-ln {
+	line-height: 1;
+	opacity: .55;
+	cursor: pointer;
+	padding: 2px 3px;
+	border-radius: 3px;
+	transition: color .2s, opacity .2s, transform .2s, background .2s;
+}
+.s2-side .s2-ln.active {
+	opacity: 1;
+	color: var(--s2-text);
+}
+.s2-side .s2-ln.win,
+.s2-side .s2-ln.preview {
+	opacity: 1;
+	color: var(--s2-accent);
+	transform: scale(1.15);
+}
+.s2-side .s2-ln.preview {
+	background: rgba(33, 150, 243, .12);
+}
+
+.s2-preview-svg {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: 6;
+	overflow: visible;
+}
+.s2-preview-svg path {
+	fill: none;
+	stroke: var(--s2-win-line);
+	stroke-width: 3;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	opacity: 0;
+	vector-effect: non-scaling-stroke;
+}
+.s2-preview-svg path.show {
+	opacity: .95;
+}
+
+.s2-frame {
+	position: relative;
+	border: 2px solid var(--s2-frame);
+	border-radius: 10px;
+	background: var(--s2-board);
+	overflow: hidden;
+	aspect-ratio: 5 / 3.15;
+	min-height: 240px;
+	width: 100%;
+	box-shadow: inset 0 0 10px 1px rgba(130, 130, 130, 0.08);
+}
+
+.s2-lines-svg {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: 4;
+	overflow: visible;
+}
+.s2-lines-svg path {
+	fill: none;
+	stroke: var(--s2-win-line);
+	stroke-width: 2.5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	opacity: 0;
+	vector-effect: non-scaling-stroke;
+	filter: none;
+}
+.s2-lines-svg path.show {
+	opacity: 1;
+}
+
+.s2-reels {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	height: 100%;
+	position: relative;
+	z-index: 2;
+}
+.s2-reel {
+	position: relative;
+	overflow: hidden;
+	border-right: 1px solid var(--s2-reel-line);
+	min-height: 0;
+}
+.s2-reel:last-child { border-right: none; }
+
+.s2-reel-strip {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	will-change: transform;
+	transform: translate3d(0, 0, 0);
+}
+/* no blur — clear scrolling symbols */
+
+.s2-cell {
+	flex: 0 0 auto;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	transition: opacity .3s, filter .3s;
+	box-sizing: border-box;
+}
+.s2-cell .s2-sym,
+.s2-cell img.s2-sym {
+	width: 68%;
+	height: 68%;
+	max-width: 84px;
+	max-height: 84px;
+	object-fit: contain;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	transition: transform .35s ease, filter .35s;
+	pointer-events: none;
+	user-select: none;
+}
+.s2-board.dimming .s2-cell:not(.win):not(.preview),
+.s2-board.previewing .s2-cell:not(.win):not(.preview) {
+	opacity: .28;
+	filter: grayscale(.35);
+}
+.s2-cell.win .s2-sym,
+.s2-cell.preview .s2-sym {
+	transform: scale(1.08);
+	filter: drop-shadow(0 0 8px rgba(255,255,255,.35));
+	animation: s2-pulse 0.9s ease-in-out infinite;
+}
+@keyframes s2-pulse {
+	0%, 100% { transform: scale(1.06); }
+	50% { transform: scale(1.14); }
+}
+
+.s2-line-pay {
+	position: absolute;
+	transform: translate(-50%, -50%);
+	z-index: 30;
+	background: rgba(11, 18, 24, .95);
+	border: 1px solid rgba(255,255,255,.45);
+	border-radius: 999px;
+	padding: 4px 10px;
+	font-size: 12px;
+	font-weight: 700;
+	color: #fff;
+	white-space: nowrap;
+	pointer-events: none;
+	box-shadow: 0 4px 14px rgba(0,0,0,.5);
+	animation: s2-pay-pop .25s ease-out;
+	opacity: 1 !important;
+	filter: none !important;
+}
+@keyframes s2-pay-pop {
+	from { transform: translate(-50%, -50%) scale(.7); opacity: 0; }
+	to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+#game_egyptian_slots .game_result_wrap {
+	font-size: 0.875rem;
+	border-radius: 10px;
+	text-align: center;
+	position: absolute;
+	width: 150px;
+	height: 85px;
+	left: calc(50% - 75px);
+	top: calc(50% - 42px);
+	border: 4px solid #557086;
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .2), 0 4px 6px -2px rgba(0, 0, 0, .1);
+	z-index: 20;
+	display: none;
+	background-color: #1a2c38;
+	background-image: url("../images/3440162.png");
+	background-repeat: repeat;
+	color: #EFEFEF;
+	pointer-events: none;
+}
+#game_egyptian_slots .game_result_wrap.win {
+	border-color: #00e701;
+	color: #00e701;
+}
+#game_egyptian_slots .game_result_wrap.lose {
+	border-color: #ff1605;
+	color: #EFEFEF;
+}
+#game_egyptian_slots .game_result_wrap .multiplier {
+	font-size: 25px;
+	font-weight: 600;
+	width: 100%;
+	margin-top: 5px;
+}
+#game_egyptian_slots .game_result_wrap .win_amount {
+	font-size: 14px;
+}
+
+.s2-bonus-banner {
+	display: none !important;
+}
+
+/* Symbol backgrounds */
+.s2-sym-wild { background-image: url("../images/wild.png"); }
+.s2-sym-scatter { background-image: url("../images/scatter.png"); }
+.s2-sym-pharaoh { background-image: url("../images/pharaoh.png"); }
+.s2-sym-queen_nefertiti { background-image: url("../images/queen_nefertiti.png"); }
+.s2-sym-anubis { background-image: url('../img/games/egyptian_slots/anubis.png'); }
+.s2-sym-horus_falcon { background-image: url('../img/games/egyptian_slots/horus_falcon.png'); }
+.s2-sym-horus_eye { background-image: url('../img/games/egyptian_slots/horus_eye.png'); }
+.s2-sym-scarab { background-image: url('../img/games/egyptian_slots/scarab.png'); }
+.s2-sym-golden_chalice { background-image: url('../img/games/egyptian_slots/golden_chalice.png'); }
+.s2-sym-golden_ankh { background-image: url('../img/games/egyptian_slots/golden_ankh.png'); }
+.s2-sym-crook_flail { background-image: url('../img/games/egyptian_slots/crook_flail.png'); }
+.s2-sym-sacred_vase { background-image: url('../img/games/egyptian_slots/sacred_vase.png'); }
+.s2-sym-ancient_tome { background-image: url('../img/games/egyptian_slots/ancient_tome.png'); }
+
+.s2-controls .input_group select#num_lines {
+	width: 100%;
+}
+
+.s2-info-modal {
+	display: none;
+	position: fixed;
+	inset: 0;
+	z-index: 9999;
+	background: rgba(0,0,0,.65);
+	align-items: center;
+	justify-content: center;
+	padding: 16px;
+}
+.s2-info-modal.open { display: flex; }
+.s2-info-box {
+	background: var(--s2-modal-bg);
+	border-radius: 10px;
+	width: min(560px, 100%);
+	max-height: 85vh;
+	overflow: auto;
+	color: var(--s2-text);
+	box-shadow: 0 12px 40px rgba(0,0,0,.35);
+	border: 1px solid var(--s2-modal-border);
+}
+.s2-info-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 14px 16px;
+	border-bottom: 1px solid var(--s2-modal-border);
+	font-weight: 700;
+}
+.s2-info-head button {
+	background: transparent;
+	border: 0;
+	color: var(--s2-muted);
+	font-size: 20px;
+	cursor: pointer;
+}
+.s2-info-tabs {
+	display: flex;
+	gap: 4px;
+	padding: 8px;
+	border-bottom: 1px solid var(--s2-modal-border);
+	flex-wrap: wrap;
+}
+.s2-info-tabs button {
+	background: transparent;
+	border: 0;
+	color: var(--s2-muted);
+	padding: 8px 12px;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: 600;
+}
+.s2-info-tabs button.active {
+	background: var(--s2-frame);
+	color: var(--s2-text);
+}
+.s2-info-body {
+	padding: 14px 16px 20px;
+	font-size: 13px;
+	color: var(--s2-muted);
+	line-height: 1.55;
+}
+.s2-info-pane { display: none; }
+.s2-info-pane.active { display: block; }
+.s2-info-body ol,
+.s2-info-body ul { padding-left: 1.2em; margin: 0; }
+.s2-info-body li { margin-bottom: 8px; }
+
+.s2-pay-toolbar {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 12px;
+	flex-wrap: wrap;
+}
+.s2-pay-toolbar label {
+	font-size: 13px;
+	opacity: 0.85;
+	margin: 0;
+}
+.s2-pay-toolbar select {
+	min-width: 72px;
+	height: 32px;
+	border-radius: 6px;
+	border: 1px solid var(--s2-modal-border);
+	background: var(--s2-modal-bg, transparent);
+	color: inherit;
+	padding: 0 8px;
+}
+.s2-pay-hint {
+	font-size: 11px;
+	opacity: 0.65;
+}
+
+.s2-pay-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 8px;
+}
+.s2-pay-item {
+	border: 1px solid var(--s2-modal-border);
+	border-radius: 8px;
+	padding: 8px;
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+.s2-pay-item .ico {
+	width: 36px;
+	height: 36px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	flex-shrink: 0;
+}
+.s2-pay-item .pays {
+	font-size: 11px;
+	line-height: 1.4;
+	color: var(--s2-muted);
+}
+.s2-pay-item.scatter-full {
+	grid-column: 1 / -1;
+}
+.s2-paylines-grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 10px;
+}
+.s2-pl {
+	text-align: center;
+}
+.s2-pl-label {
+	font-size: 11px;
+	color: var(--s2-text);
+	margin-bottom: 4px;
+	font-weight: 700;
+}
+.s2-pl-grid {
+	display: grid;
+	grid-template-columns: repeat(5, 8px);
+	grid-template-rows: repeat(3, 8px);
+	gap: 3px;
+	justify-content: center;
+}
+.s2-pl-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: var(--s2-frame);
+}
+.s2-pl-dot.on { background: var(--s2-text); }
+
+@media (max-width: 575px) {
+	.s2-board-wrap { grid-template-columns: 20px 1fr 20px; gap: 3px; }
+	.s2-side { font-size: 9px; }
+	.s2-pay-grid { grid-template-columns: repeat(2, 1fr); }
+	.s2-paylines-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Egyptian Slots provably fair / bet info grid */
+.s2-pf-panel {
+	max-width: 480px;
+	margin: 16px auto 0;
+	border-radius: 10px;
+	padding: 12px;
+	border: 1px solid #DDD;
+	background: transparent;
+	color: inherit;
+}
+.s2-pf-meta {
+	text-align: center;
+	margin-bottom: 8px;
+	font-size: 12px;
+	opacity: 0.75;
+}
+.s2-pf-board-wrap {
+	position: relative;
+	display: grid;
+	grid-template-columns: 28px 1fr 28px;
+	gap: 6px;
+	align-items: stretch;
+	max-width: 460px;
+	margin: 0 auto;
+}
+.s2-pf-side {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 4px 0;
+	font-size: 11px;
+	font-weight: 700;
+	user-select: none;
+	color: #9ca3af;
+	position: relative;
+	z-index: 3;
+}
+.s2-pf-side.left { align-items: flex-end; text-align: right; }
+.s2-pf-side.right { align-items: flex-start; text-align: left; }
+.s2-pf-ln {
+	line-height: 1;
+	opacity: 0.45;
+	padding: 1px 2px;
+	border-radius: 3px;
+	cursor: pointer;
+	transition: color .2s, opacity .2s, transform .2s;
+}
+.s2-pf-ln.is-active {
+	opacity: 1;
+	color: #333;
+}
+.s2-pf-ln.is-win {
+	opacity: 1;
+	color: #16a34a;
+	transform: scale(1.12);
+}
+.s2-pf-ln.is-preview {
+	opacity: 1;
+	color: #16a34a;
+	transform: scale(1.15);
+}
+.s2-pf-frame {
+	position: relative;
+	border: 1px solid #e5e7eb;
+	border-radius: 10px;
+	padding: 6px;
+	background: #fff;
+	min-width: 0;
+	overflow: hidden;
+}
+.s2-pf-reels {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 0;
+	min-width: 0;
+}
+.s2-pf-reel {
+	display: flex;
+	flex-direction: column;
+	border-right: 1px solid #e5e7eb;
+	min-width: 0;
+}
+.s2-pf-reel:last-child {
+	border-right: none;
+}
+.s2-pf-cell {
+	aspect-ratio: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: opacity .25s, filter .25s;
+}
+.s2-pf-cell img {
+	width: 78%;
+	height: 78%;
+	object-fit: contain;
+	transition: transform .3s ease, filter .3s;
+	pointer-events: none;
+}
+.s2-pf-reels.is-previewing .s2-pf-cell:not(.is-win):not(.is-preview) {
+	opacity: 0.28;
+	filter: grayscale(0.35);
+}
+.s2-pf-cell.is-win img,
+.s2-pf-cell.is-preview img {
+	transform: scale(1.08);
+	filter: drop-shadow(0 0 6px rgba(0,0,0,.2));
+}
+.s2-pf-preview-svg {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: 4;
+	overflow: visible;
+}
+.s2-pf-preview-svg path {
+	fill: none;
+	stroke: #16a34a;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	opacity: 0.95;
+	vector-effect: non-scaling-stroke;
+}
+.s2-pf-result {
+	margin-top: 12px;
+	text-align: center;
+	font-size: 13px;
+}
+.s2-pf-result-label {
+	opacity: 0.75;
+}
+.s2-pf-mult {
+	color: #03a9f4;
+	font-size: 28px;
+	font-weight: 700;
+	margin-top: 4px;
+}
+.s2-pf-line-pay {
+	position: absolute;
+	transform: translate(-50%, -50%);
+	z-index: 8;
+	background: rgba(11, 18, 24, 0.95);
+	border: 1px solid rgba(255,255,255,0.45);
+	border-radius: 999px;
+	padding: 3px 9px;
+	font-size: 12px;
+	font-weight: 700;
+	color: #fff;
+	white-space: nowrap;
+	pointer-events: none;
+}
+.dark_mode .s2-pf-line-pay {
+	background: rgba(7, 24, 36, 0.95);
+	border-color: rgba(255,255,255,0.35);
+}
+
+.dark_mode .s2-pf-panel {
+	border-color: #2f4553;
+	background: transparent;
+	color: #fff;
+}
+.dark_mode .s2-pf-frame {
+	background: #0f212e;
+	border-color: #2f4553;
+}
+.dark_mode .s2-pf-reel {
+	border-right-color: #2f4553;
+}
+.dark_mode .s2-pf-side {
+	color: #64748b;
+}
+.dark_mode .s2-pf-ln.is-active {
+	color: #e2e8f0;
+}
+.dark_mode .s2-pf-ln.is-win,
+.dark_mode .s2-pf-ln.is-preview {
+	color: #00e701;
+}
+.dark_mode .s2-pf-preview-svg path {
+	stroke: rgba(255,255,255,.9);
+}
+.dark_mode .s2-pf-cell.is-win img,
+.dark_mode .s2-pf-cell.is-preview img {
+	filter: drop-shadow(0 0 8px rgba(255,255,255,.35));
+}
+.dark_mode .s2-pf-mult {
+	color: #38bdf8;
+}
+#s2_paytable_lines {
+	background: none;
+}

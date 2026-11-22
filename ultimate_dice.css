@@ -1,0 +1,48 @@
+.jtoggler-control {
+	background: #ff9800;
+}
+.game_main.game_ultimate_dice .slider .runway .slider_button {
+	width: 30px;
+	height: 24px;
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAGCAYAAADUtS5UAAAAAXNSR0IArs4c6QAAAH1JREFUKBVjvHr1KtvPnz+bGP7/j2MAAUbGRezs7HXa2tq/wHw0glrqWaCWlsPN//+/HCgG4lbAxZAY1FLPBPcpkuFYxWDysJCB8UE0NjGYPDY5oBgTTJ7eNBMoTjEsxSYGU4RNDpsYAfUsoIQEjlNYkAANAYnB9KHT1FIPAOiAaX72x7l3AAAAAElFTkSuQmCC) no-repeat #FFF;
+	background-position: center;
+	background-size: 70%;
+	border: 1px solid #EFEFEF;
+	top: -7px;
+	left: calc(50% - 15px);
+}
+.game_main.game_ultimate_dice .slider .runway .slider_left_button {
+	width: 34px;
+	height: 34px;
+	background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNCAxMSI+PHBhdGggZmlsbD0iI0NFQ0RDRCIgZmlsbC1ydWxlPSJub256ZXJvIiBkPSJNOSAwYy41MiAwIC45NC40IDEgLjkzdjkuMDJjMCAuNTgtLjQ1IDEuMDUtMSAxLjA1LS41MiAwLS45NC0uNC0xLS45M1YxLjA1QzggLjQ3IDguNDUgMCA5IDB6bTQgMGMuNTIgMCAuOTQuNCAxIC45M3Y5LjAyYzAgLjU4LS40NSAxLjA1LTEgMS4wNS0uNTIgMC0uOTQtLjQtMS0uOTNWMS4wNUMxMiAuNDcgMTIuNDUgMCAxMyAwek02LjA0LjNhMSAxIDAgMDEuMDYgMS4zM2wtLjA5LjFMMi4xIDUuNWwzLjkyIDMuNzJhMSAxIDAgMDEtMS4yOCAxLjUzbC0uMS0uMDhMLjY1IDYuODhhMiAyIDAgMDEtLjA3LTIuN2wuMTItLjEzTDQuNjMuMjhBMSAxIDAgMDE2LjA0LjN6Ii8+PC9zdmc+) no-repeat #FFF;
+	background-size: contain;
+	border-radius: inherit;
+	border: none;
+	display: inline-block;
+	vertical-align: middle;
+	top: -12px;
+	left: calc(50% - 15px);
+	position: absolute;
+	background-position: center;
+	background-size: 50%;
+	border: 1px solid #EFEFEF;
+	cursor: col-resize;
+}
+.game_main.game_ultimate_dice .slider .runway .slider_right_button {
+	width: 34px;
+	height: 34px;
+	background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNCAxMSI+PHBhdGggZmlsbD0iI0NFQ0RDRCIgZmlsbC1ydWxlPSJub256ZXJvIiBkPSJNOSAwYy41MiAwIC45NC40IDEgLjkzdjkuMDJjMCAuNTgtLjQ1IDEuMDUtMSAxLjA1LS41MiAwLS45NC0uNC0xLS45M1YxLjA1QzggLjQ3IDguNDUgMCA5IDB6bTQgMGMuNTIgMCAuOTQuNCAxIC45M3Y5LjAyYzAgLjU4LS40NSAxLjA1LTEgMS4wNS0uNTIgMC0uOTQtLjQtMS0uOTNWMS4wNUMxMiAuNDcgMTIuNDUgMCAxMyAwek02LjA0LjNhMSAxIDAgMDEuMDYgMS4zM2wtLjA5LjFMMi4xIDUuNWwzLjkyIDMuNzJhMSAxIDAgMDEtMS4yOCAxLjUzbC0uMS0uMDhMLjY1IDYuODhhMiAyIDAgMDEtLjA3LTIuN2wuMTItLjEzTDQuNjMuMjhBMSAxIDAgMDE2LjA0LjN6Ii8+PC9zdmc+) no-repeat #FFF;
+	background-size: contain;
+	border-radius: inherit;
+	border: none;
+	display: inline-block;
+	vertical-align: middle;
+	top: -12px;
+	left: calc(50% - 15px);
+	position: absolute;
+	background-position: center;
+	background-size: 50%;
+	border: 1px solid #EFEFEF;
+	transform: rotateY(180deg);
+	cursor: col-resize;
+}
